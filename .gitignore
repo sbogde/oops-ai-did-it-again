@@ -1,0 +1,7 @@
+*.cs.meta
+*.DS_Store
+*.user
+*.vs/
+*.idea/
+*.vscode/
+
