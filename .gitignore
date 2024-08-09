@@ -1,4 +1,4 @@
-*.cs.meta
+*.*.meta
 *.DS_Store
 *.user
 *.vs/

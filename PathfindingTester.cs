@@ -28,6 +28,9 @@ public class PathfindingTester : MonoBehaviour
     [SerializeField]
     private GameObject worldObject = null;
 
+    [SerializeField]
+    private bool isMovable = true;
+
     // Timer.
     private float timer = 0;
 
@@ -136,6 +139,12 @@ public class PathfindingTester : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!isMovable)
+        {
+            return;  // If not movable, don't execute the movement logic
+        }
+
         if (agentMove)
         {
 
