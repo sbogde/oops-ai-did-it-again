@@ -19,6 +19,7 @@ public class VisGraphWaypointManager : MonoBehaviour
     // List of all connections from this node.
     [SerializeField]
     public List<VisGraphConnection> connections = new List<VisGraphConnection>();
+
     public List<VisGraphConnection> Connections
     {
         get { return connections; }
@@ -27,22 +28,32 @@ public class VisGraphWaypointManager : MonoBehaviour
     // Allow you to set a waypoint as a start or goal.
     [SerializeField]
     private enum waypointPropsList { Standard, Start, Goal };
+
 #pragma warning disable
     [SerializeField]
     private waypointPropsList WaypointType = waypointPropsList.Standard;
+
 #pragma warning restore
     // Controls if the node type is displayed in the Unity editor.
     private const bool displayType = false;
+
     // Used to determine if the waypoint is selected.
     private bool ObjectSelected = false;
+
     // Text displayed above the node.
     private const bool displayText = true;
     private string infoText = "";
     private Color infoTextColor;
+
+    public int score;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Assign a random score between 0 and 3 when the game starts
+        score = Random.Range(0, 4);
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,13 +64,18 @@ public class VisGraphWaypointManager : MonoBehaviour
     {
         // Text displayed above the waypoint.
         infoText = "";
+
         if (displayType)
         {
 #pragma warning disable
             infoText = "Type: " + WaypointType.ToString() + " / ";
 #pragma warning restore
         }
+
         infoText += gameObject.name + "\n Connections: " + Connections.Count;
+
+        infoText += "\n Score: " + score;
+
         switch (WaypointTextColour)
         {
             case waypointTextColour.Blue:

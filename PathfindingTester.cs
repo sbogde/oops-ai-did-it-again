@@ -46,6 +46,9 @@ public class PathfindingTester : MonoBehaviour
     private int moveDirection = 1;
     private bool agentMove = true;
 
+    private int totalScore = 0;
+    private HashSet<VisGraphWaypointManager> visitedWaypoints = new HashSet<VisGraphWaypointManager>();
+
 
     //void Awake()
     //{
@@ -90,6 +93,7 @@ public class PathfindingTester : MonoBehaviour
                 Waypoints.Add(waypoint);
             }
         }
+
         // Go through the waypoints and create connections.
         foreach (GameObject waypoint in Waypoints)
         {
@@ -163,11 +167,27 @@ public class PathfindingTester : MonoBehaviour
             {
                 float distToObject =
                 Vector3.Distance(transform.position, worldObject.transform.position);
+
                 if (distToObject < 7)
                 {
                     return;
                 }
             }
+
+            ////////////
+            // Check if the agent has passed the waypoint
+            VisGraphWaypointManager currentWaypoint = ConnectionArray[currentTarget].ToNode.GetComponent<VisGraphWaypointManager>();
+            if (currentWaypoint != null)
+            {
+                float distanceToWaypoint = Vector3.Distance(transform.position, currentWaypoint.transform.position);
+                if (distanceToWaypoint < 1.0f && !visitedWaypoints.Contains(currentWaypoint))
+                {
+                    totalScore += currentWaypoint.score;
+                    visitedWaypoints.Add(currentWaypoint);
+                    Debug.Log("Node: " + currentWaypoint.name + ", Score: " + currentWaypoint.score + ", totalScore=" + totalScore);
+                }
+            }
+            ////////////
 
             // Determine the direction to first node in the array.
             if (moveDirection > 0)
