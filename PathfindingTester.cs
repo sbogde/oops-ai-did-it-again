@@ -184,6 +184,8 @@ public class PathfindingTester : MonoBehaviour
                 {
                     totalScore += currentWaypoint.score;
                     visitedWaypoints.Add(currentWaypoint);
+
+                    PrefabStoreManager.AddAgentScores(name, totalScore);
                     Debug.Log("Node: " + currentWaypoint.name + ", Score: " + currentWaypoint.score + ", totalScore=" + totalScore);
                 }
             }
@@ -252,7 +254,7 @@ public class PathfindingTester : MonoBehaviour
                 Debug.Log(name + "'s Time: " + timer);
                 Debug.Log(name + "'s Distance: " + totalDistance);
 
-                PrefabStoreManager.AddAgentInfo(name, ((int)timer), totalDistance);
+                //PrefabStoreManager.AddAgentTimeAndDistance(name, ((int)timer), totalDistance);
 
                 totalDistance = 0;
                 timer = 0;
@@ -272,8 +274,12 @@ public class PathfindingTester : MonoBehaviour
 
         for (int i = 0; i < PrefabStoreManager.agentNames.Count; i++)
         {
-            string displayText = PrefabStoreManager.agentNames[i] + "'s Time: " + PrefabStoreManager.agentTimes[i] + " / Distance: " + PrefabStoreManager.agentDistances[i];
+            //string displayText = PrefabStoreManager.agentNames[i] + "'s Time: " + PrefabStoreManager.agentTimes[i] + " / Distance: " + PrefabStoreManager.agentDistances[i];
+            string displayText = PrefabStoreManager.agentNames[i] + "'s "  +
+                                " Total Score: " + PrefabStoreManager.agentTotalScores[i];
+
             GUI.Label(new Rect(10, yPosition, Screen.width, Screen.height), displayText);
+
             yPosition += 20; // Increment the y position for the next label
         }
 
