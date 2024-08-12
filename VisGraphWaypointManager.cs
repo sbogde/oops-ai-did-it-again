@@ -74,8 +74,10 @@ public class VisGraphWaypointManager : MonoBehaviour
         for (int i = 0; i < numberOfCollectables; i++)
         {
             Vector3 randomPosition = GetRandomPositionNearWaypoint();
-            GameObject collectable = Instantiate(collectablePrefab, randomPosition, Quaternion.identity);
-            collectable.transform.localScale = Vector3.one * Random.Range(0.8f, 1.2f);
+            Quaternion rotation = Quaternion.Euler(0, Random.Range(-162, -142), 0);
+
+            GameObject collectable = Instantiate(collectablePrefab, randomPosition, rotation);
+            collectable.transform.localScale = Vector3.one * 1.1f;
 
             Debug.Log("Collectable spawned at: " + randomPosition);
 
