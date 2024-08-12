@@ -186,6 +186,19 @@ public class PathfindingTester : MonoBehaviour
                     visitedWaypoints.Add(currentWaypoint);
 
                     PrefabStoreManager.AddAgentScores(name, totalScore);
+
+                    // Handle collectable collection
+                    Collider[] hitColliders = Physics.OverlapSphere(currentWaypoint.transform.position, 1.5f); // 1.5f is the search radius
+                    foreach (var hitCollider in hitColliders)
+                    {
+                        if (hitCollider.CompareTag("Collectable"))
+                        {
+                            Destroy(hitCollider.gameObject); // Destroy the collectable
+                            Debug.Log("Destroyed collectable: " + hitCollider.name);
+                        }
+                    }
+
+
                     Debug.Log("Node: " + currentWaypoint.name + ", Score: " + currentWaypoint.score + ", totalScore=" + totalScore);
                 }
             }

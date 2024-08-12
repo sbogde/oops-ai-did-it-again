@@ -47,11 +47,54 @@ public class VisGraphWaypointManager : MonoBehaviour
 
     public int score;
 
+    public GameObject collectablePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
         // Assign a random score between 0 and 3 when the game starts
         score = Random.Range(0, 4);
+
+        // Spawn collectables based on the score
+        if (collectablePrefab != null)
+        {
+            SpawnCollectables(score);
+        }
+        else
+        {
+            //Debug.LogWarning("No Collectable Prefab assigned for " + gameObject.name);
+        }
+    }
+
+
+    private void SpawnCollectables(int numberOfCollectables)
+    {
+        Debug.LogWarning(gameObject.name + " got numberOfCollectables=" + numberOfCollectables);
+
+        for (int i = 0; i < numberOfCollectables; i++)
+        {
+            Vector3 randomPosition = GetRandomPositionNearWaypoint();
+            GameObject collectable = Instantiate(collectablePrefab, randomPosition, Quaternion.identity);
+            collectable.transform.localScale = Vector3.one * Random.Range(0.8f, 1.2f);
+
+            Debug.Log("Collectable spawned at: " + randomPosition);
+
+            // Add an animation? or a script to handle the collectable's behavior
+            //Animator collectableAnimator = collectable.GetComponent<Animator>();
+            //if (collectableAnimator != null)
+            //{
+            //    collectableAnimator.SetTrigger("Idle");  
+            //}
+        }
+    }
+
+    private Vector3 GetRandomPositionNearWaypoint()
+    {
+        // Generate a random position near the waypoint within a small radius
+        float radius = 2.0f;  
+        Vector2 randomOffset = Random.insideUnitCircle * radius;
+
+        return new Vector3(transform.position.x + randomOffset.x, transform.position.y, transform.position.z + randomOffset.y);
     }
 
     // Update is called once per frame
