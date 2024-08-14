@@ -77,9 +77,9 @@ public class VisGraphWaypointManager : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0, Random.Range(-162, -142), 0);
 
             GameObject collectable = Instantiate(collectablePrefab, randomPosition, rotation);
-            collectable.transform.localScale = Vector3.one * 1.1f;
+            //collectable.transform.localScale = Vector3.one * 1.1f;
 
-            Debug.Log("Collectable spawned at: " + randomPosition);
+            Debug.Log("Collectable" + collectable.name + "spawned at: " + randomPosition);
 
             // Add an animation? or a script to handle the collectable's behavior
             //Animator collectableAnimator = collectable.GetComponent<Animator>();
