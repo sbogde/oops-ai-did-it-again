@@ -69,7 +69,7 @@ public class VisGraphWaypointManager : MonoBehaviour
 
     private void SpawnCollectables(int numberOfCollectables)
     {
-        Debug.LogWarning(gameObject.name + " got numberOfCollectables=" + numberOfCollectables);
+        Debug.Log(gameObject.name + " got numberOfCollectables=" + numberOfCollectables);
 
         for (int i = 0; i < numberOfCollectables; i++)
         {

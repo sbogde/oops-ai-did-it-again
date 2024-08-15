@@ -177,6 +177,7 @@ public class PathfindingTester : MonoBehaviour
             ////////////
             // Check if the agent has passed the waypoint
             VisGraphWaypointManager currentWaypoint = ConnectionArray[currentTarget].ToNode.GetComponent<VisGraphWaypointManager>();
+
             if (currentWaypoint != null)
             {
                 float distanceToWaypoint = Vector3.Distance(transform.position, currentWaypoint.transform.position);
@@ -198,8 +199,7 @@ public class PathfindingTester : MonoBehaviour
                         }
                     }
 
-
-                    Debug.Log("Node: " + currentWaypoint.name + ", Score: " + currentWaypoint.score + ", totalScore=" + totalScore);
+                    Debug.Log("Node: " + currentWaypoint.name + ", Score: " + currentWaypoint.score + ", totalScore=" + totalScore);        
                 }
             }
             ////////////
@@ -261,7 +261,6 @@ public class PathfindingTester : MonoBehaviour
         }
         else
         {
-
             if (outputTimeAndDist == true)
             {
                 Debug.Log(name + "'s Time: " + timer);
@@ -272,10 +271,42 @@ public class PathfindingTester : MonoBehaviour
                 totalDistance = 0;
                 timer = 0;
                 outputTimeAndDist = false;
+
+                // Trigger Game Over
+                GameOver();
             }
         }
     }
 
+
+    void GameOver()
+    {
+        Debug.Log("Game Over: Fox has returned to the endpoint.");
+
+        // Find the fox by name 
+        GameObject fox = GameObject.Find("Fox");
+
+        if (fox != null)
+        {
+            // Get the Animator component from the fox
+            Animator foxAnimator = fox.GetComponent<Animator>();
+
+            if (foxAnimator != null)
+            {
+
+                // Trigger the final animation(s)
+                foxAnimator.Play("Fox_Attack_Tail");
+            }
+            else
+            {
+                Debug.LogWarning("No Animator component found on Fox.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Fox object not found in the scene.");
+        }
+    }
 
 
     private void OnGUI()
@@ -294,6 +325,16 @@ public class PathfindingTester : MonoBehaviour
             GUI.Label(new Rect(10, yPosition, Screen.width, Screen.height), displayText);
 
             yPosition += 20; // Increment the y position for the next label
+        }
+
+        if (totalDistance == 0)
+        {
+            GUI.color = Color.red;
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 30;
+            style.alignment = TextAnchor.MiddleCenter;
+
+            GUI.Label(new Rect(0, yPosition, Screen.width, Screen.height), "Game Over!", style);
         }
 
     }

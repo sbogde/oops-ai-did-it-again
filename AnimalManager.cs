@@ -13,8 +13,8 @@ public class AnimalManager : MonoBehaviour
     private GameObject currentTarget = null;
 
     // Current Speed.
-    //private float currentSpeed = 2.7f;
-    private float currentSpeed = 2.9f;
+    //private float currentSpeed = 2.9f;
+    private float currentSpeed = 3.9f;
 
     // A reference to the animator.
     private Animator anim;
